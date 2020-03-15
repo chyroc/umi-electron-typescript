@@ -2,14 +2,45 @@
   "name": "umi-electron-typescript",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
+  "type": "module",
   "dependencies": {
-    "electron": "^8.1.1"
+    "@ant-design/icons": "^4.0.2",
+    "@umijs/preset-react": "1.x",
+    "@umijs/test": "^3.0.7",
+    "antd": "^4.0.2",
+    "electron": "^8.1.1",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "umi": "^3.0.7",
+    "yorkie": "^2.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^13.9.1",
+    "concurrently": "^5.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:electron": "electron ."
+    "start": "concurrently \"npm run start:umi\" \"npm run start:electron\" ",
+    "start:electron": "concurrently \"tsc -w --skipLibCheck\" \"sleep 2 && electron ./index.js\" ",
+    "start:umi": "umi dev",
+    "build:umi": "umi build",
+    "prettier:umi": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "test:umi": "umi-test",
+    "test:coverage:umi": "umi-test --coverage"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "author": "",
   "license": "ISC"
