@@ -2,13 +2,14 @@
   "name": "umi-electron-typescript",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "dependencies": {
     "electron": "^8.1.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:electron": "electron ."
   },
   "author": "",
   "license": "ISC"
