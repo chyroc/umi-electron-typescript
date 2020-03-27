@@ -21,3 +21,7 @@
 
 node_modules/
 .idea/
+src/pages/index.js
+src/pages/index.js.map
+index.js
+index.js.map

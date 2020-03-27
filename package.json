@@ -23,8 +23,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run start:umi\" \"npm run start:electron\" ",
-    "start:electron": "concurrently \"tsc -w --skipLibCheck\" \"sleep 2 && electron ./index.js\" ",
+    "start": "concurrently \"npm run start:umi\" \"tsc -w --skipLibCheck\" \"electron ./index.js\" ",
     "start:umi": "umi dev",
     "build:umi": "umi build",
     "prettier:umi": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
@@ -32,7 +31,6 @@
     "test:coverage:umi": "umi-test --coverage"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [

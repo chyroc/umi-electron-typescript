@@ -1,4 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { promises as fs } from 'fs'
+import path from 'path'
 
 ipcMain.on('open-dir-select-dialog', (event, arg) => {
   dialog
@@ -12,7 +14,35 @@ ipcMain.on('open-dir-select-dialog', (event, arg) => {
     });
 });
 
-function createWindow() {
+const walk = async (dir: string) => {
+  const origin = await fs.readdir(dir);
+
+  let files: string[] = []
+
+  await Promise.all(origin.map(async file => {
+    const filePath = path.join(dir, file);
+    const stats = await fs.stat(filePath);
+    if (stats.isDirectory()) {
+      await walk(filePath)
+    } else if (stats.isFile()) {
+      files.push(filePath)
+    }
+  }))
+
+  return files
+}
+
+ipcMain.on('scan-dir', (event, dirs: string[]) => {
+  (dirs || []).forEach(async dir => {
+    const files = await walk(dir)
+    console.log('dir', dir, files)
+    // fs.readdir(dir, (err, files) => {
+    //   console.log('files', dir, files)
+    // })
+  })
+});
+
+function createWindow () {
   // 创建浏览器窗口
   const win = new BrowserWindow({
     width: 1400,

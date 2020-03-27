@@ -45,7 +45,7 @@ export default () => {
                   ipcRenderer.send('open-dir-select-dialog');
                 }}
               >
-                <FolderOpenOutlined />
+                <FolderOpenOutlined/>
               </Button>
             }
           />
@@ -53,13 +53,22 @@ export default () => {
       )}
 
       {isFilesSelected && (
-        <Button
-          onClick={() => {
-            setFiles([]);
-          }}
-        >
-          重新选择
-        </Button>
+        <div>
+          <Button
+            onClick={() => {
+              setFiles([]);
+            }}
+          >
+            重新选择
+          </Button>
+          <Button
+            onClick={() => {
+              ipcRenderer.send('scan-dir', files)
+            }}
+          >
+            搜索
+          </Button>
+        </div>
       )}
     </div>
   );
